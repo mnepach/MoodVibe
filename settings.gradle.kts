@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "MoodVibe"
 include(":app")
-include(":shared")

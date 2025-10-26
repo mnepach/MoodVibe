@@ -12,8 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +31,7 @@ import com.example.moodvibe.viewmodel.MoodViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
-@AndroidEntryPoint // <-- Add this annotation
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +88,6 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
 fun MoodCard(mood: Mood, onClick: () -> Unit) {
     var scale by remember { mutableStateOf(1f) }
 
-    // This is just a simple example of an animation.
-    // In a real app you might want to handle this differently.
     LaunchedEffect(Unit) {
         while (true) {
             scale = 1.05f
@@ -111,7 +107,7 @@ fun MoodCard(mood: Mood, onClick: () -> Unit) {
                 )
             )
             .clickable { onClick() }
-            .scale(scale), // You can apply the scale modifier here
+            .scale(scale),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -131,7 +127,7 @@ fun MoodDetailScreen(moodName: String, viewModel: MoodViewModel = hiltViewModel(
     LaunchedEffect(moodName) {
         viewModel.loadQuote(moodName)
         alpha = 0f
-        delay(100) // small delay to trigger the animation
+        delay(100)
         alpha = 1f
     }
 
@@ -154,8 +150,6 @@ fun MoodDetailScreen(moodName: String, viewModel: MoodViewModel = hiltViewModel(
             fontSize = 24.sp,
             modifier = Modifier
                 .padding(16.dp)
-                // In Compose, it's better to use Modifier.alpha()
-                // However, the original code used a state variable, so keeping it for consistency.
                 .graphicsLayer(alpha = alpha)
         )
     }
