@@ -25,11 +25,6 @@ android {
         compose = true
     }
 
-    composeOptions {
-        // 👇 обязательно добавь это — версия расширения компилятора Compose
-        kotlinCompilerExtensionVersion = "1.7.4"
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -63,7 +58,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.10.00")) // ✅ обновлённая BOM
+    implementation(platform("androidx.compose:compose-bom:2024.10.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -74,11 +69,20 @@ dependencies {
     // Navigation & Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("androidx.navigation:navigation-compose:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
 
     // Hilt (DI)
     implementation("com.google.dagger:hilt-android:2.52")
     kapt("com.google.dagger:hilt-compiler:2.52")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    // Room Database
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    // Coil для загрузки изображений
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Testing
     testImplementation(libs.junit)

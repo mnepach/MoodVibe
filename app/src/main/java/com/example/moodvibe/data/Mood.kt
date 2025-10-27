@@ -1,80 +1,82 @@
 package com.example.moodvibe.data
 
+import com.example.moodvibe.R
+
 data class Mood(
     val name: String,
-    val gradientColors: List<String>, // Используем первый элемент для эмодзи
+    val imageRes: Int, // ID ресурса изображения
     val quotes: List<String>
 )
 
 val moods = listOf(
     Mood(
-        name = "Joy",
-        gradientColors = listOf("😊", "✨"), // Эмодзи вместо цветов
+        name = "Радость",
+        imageRes = R.drawable.mood_joy,
         quotes = listOf(
-            "Happiness is a choice!",
-            "Shine like the sun!",
-            "Today is a beautiful day to be alive",
-            "Your smile is contagious"
+            "Счастье — это выбор!",
+            "Сияй как солнце!",
+            "Сегодня прекрасный день",
+            "Твоя улыбка заразительна"
         )
     ),
     Mood(
-        name = "Calm",
-        gradientColors = listOf("😌", "🧘"),
+        name = "Спокойствие",
+        imageRes = R.drawable.mood_calm,
         quotes = listOf(
-            "Peace comes from within",
-            "Breathe deeply",
-            "Find your inner zen",
-            "Stillness speaks volumes"
+            "Покой приходит изнутри",
+            "Алкоголь убивает нервные клетки - остаются только спокойные",
+            "Найди свой внутренний дзен",
+            "Тишина говорит о многом"
         )
     ),
     Mood(
-        name = "Excited",
-        gradientColors = listOf("🤩", "🎉"),
+        name = "Восторг",
+        imageRes = R.drawable.mood_excited,
         quotes = listOf(
-            "Life is an adventure!",
-            "Chase your dreams",
-            "Every moment is a gift",
-            "The best is yet to come"
+            "Моя жизнь в двух состояниях: светлая и нефильтрованная",
+            "Следуй за мечтой",
+            "Каждый момент — это подарок",
+            "Лучшее ещё впереди"
         )
     ),
     Mood(
-        name = "Thoughtful",
-        gradientColors = listOf("🤔", "💭"),
+        name = "Задумчивость",
+        imageRes = R.drawable.mood_thoughtful,
         quotes = listOf(
-            "Deep thoughts lead to wisdom",
-            "Reflection brings clarity",
-            "Think before you act",
-            "Knowledge is power"
+            "Глубокие мысли ведут к мудрости",
+            "Размышление приносит ясность",
+            "Подумай, прежде чем действовать",
+            "Знание — сила"
         )
     ),
     Mood(
-        name = "Loved",
-        gradientColors = listOf("🥰", "💖"),
+        name = "Любовь",
+        imageRes = R.drawable.mood_loved,
         quotes = listOf(
-            "Love is all around",
-            "You are deeply appreciated",
-            "Spread love everywhere",
-            "Love yourself first"
+            "Любовь повсюду",
+            "Тебя глубоко ценят",
+            "Распространяй любовь везде",
+            "Люби себя в первую очередь"
         )
     ),
     Mood(
-        name = "Sad",
-        gradientColors = listOf("😢", "🌧️"),
+        name = "Грусть",
+        imageRes = R.drawable.mood_sad,
         quotes = listOf(
-            "It's okay to feel",
-            "Tomorrow is a new day",
-            "This too shall pass",
-            "Be gentle with yourself"
+            "Это нормально — чувствовать",
+            "Завтра новый день",
+            "И это пройдёт",
+            "Будь добр к себе"
         )
     ),
     Mood(
-        name = "Energetic",
-        gradientColors = listOf("⚡", "🔥"),
+        name = "Энергия",
+        imageRes = R.drawable.mood_energetic,
         quotes = listOf(
-            "Unleash your power!",
-            "Nothing can stop you",
-            "Energy flows where attention goes",
-            "You've got this!"
+            "Раскрой свою силу!",
+            "Ничто не остановит тебя",
+            "Энергия течёт туда, куда направлено внимание",
+            "У тебя всё получится!"
         )
     )
 )
