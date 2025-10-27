@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoodVibe</string>
+    <string name="choose_mood">Выбери настроение</string>
+    <string name="mood_history">История настроений</string>
 </resources>
