@@ -17,7 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.moodvibe.HiltTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -47,6 +47,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
         }
     }
 }
@@ -84,12 +86,24 @@ dependencies {
     // Coil для загрузки изображений
     implementation("io.coil-kt:coil-compose:2.5.0")
 
-    // Testing
+    // Unit Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlin.test)
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+
+    // Android Instrumented Testing
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    // Hilt Testing
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.52")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.52")
+
+    // Coroutines Testing для Android тестов
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

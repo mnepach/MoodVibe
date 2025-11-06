@@ -56,7 +56,7 @@ class MoodViewModel @Inject constructor(
             val newQuote = getQuoteUseCase(moodName)
             _quote.value = newQuote
 
-            // Сохраняем в историю
+            // сохранение в историю
             repository.saveMoodToHistory(moodName, newQuote)
         }
     }

@@ -104,7 +104,6 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Заголовок
             Text(
                 text = "✨ Как твоё настроение?",
                 fontSize = 32.sp,
@@ -122,7 +121,7 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Горизонтальный скролл с настроениями
+            // скролл с настроениями
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(horizontal = 16.dp),
@@ -138,7 +137,7 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Кнопка истории
+            // кнопка истории
             if (history.isNotEmpty()) {
                 GlassCard(
                     modifier = Modifier
@@ -219,7 +218,6 @@ fun MoodCard(mood: Mood, onClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Анимированное изображение
             AnimatedMoodImage(imageRes = mood.imageRes)
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -233,7 +231,6 @@ fun MoodCard(mood: Mood, onClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Индикатор
             Box(
                 modifier = Modifier
                     .width(40.dp)

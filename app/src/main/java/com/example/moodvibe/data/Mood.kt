@@ -4,7 +4,7 @@ import com.example.moodvibe.R
 
 data class Mood(
     val name: String,
-    val imageRes: Int, // ID ресурса изображения
+    val imageRes: Int, // айди изображения
     val quotes: List<String>
 )
 
@@ -40,7 +40,7 @@ val moods = listOf(
         )
     ),
     Mood(
-        name = "Задумчивость",
+        name = "Раздумье",
         imageRes = R.drawable.mood_thoughtful,
         quotes = listOf(
             "Глубокие мысли ведут к мудрости",

@@ -16,7 +16,7 @@ class MoodRepository @Inject constructor(
         moods.find { it.name == moodName }?.quotes?.random() ?: "Оставайся вдохновлённым!"
     }
 
-    // История настроений
+    // история настроений
     suspend fun saveMoodToHistory(moodName: String, quote: String) {
         val entity = MoodHistoryEntity(
             moodName = moodName,
