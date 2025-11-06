@@ -11,8 +11,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -100,10 +101,12 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
+
             Text(
                 text = "✨ Как твоё настроение?",
                 fontSize = 32.sp,
@@ -121,23 +124,81 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // скролл с настроениями
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp),
-                modifier = Modifier.fillMaxWidth()
+            // Сетка настроений 2-2-1 или 2-2-2
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
-                items(moods) { mood ->
+                // Первая строка - 2 карточки
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally)
+                ) {
+                    if (moods.isNotEmpty()) {
+                        MoodCard(
+                            mood = moods[0],
+                            onClick = { navController.navigate("mood/${moods[0].name}") }
+                        )
+                    }
+                    if (moods.size > 1) {
+                        MoodCard(
+                            mood = moods[1],
+                            onClick = { navController.navigate("mood/${moods[1].name}") }
+                        )
+                    }
+                }
+
+                // Вторая строка - 2 карточки
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally)
+                ) {
+                    if (moods.size > 2) {
+                        MoodCard(
+                            mood = moods[2],
+                            onClick = { navController.navigate("mood/${moods[2].name}") }
+                        )
+                    }
+                    if (moods.size > 3) {
+                        MoodCard(
+                            mood = moods[3],
+                            onClick = { navController.navigate("mood/${moods[3].name}") }
+                        )
+                    }
+                }
+
+                // Третья строка - 2 карточки
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally)
+                ) {
+                    if (moods.size > 4) {
+                        MoodCard(
+                            mood = moods[4],
+                            onClick = { navController.navigate("mood/${moods[4].name}") }
+                        )
+                    }
+                    if (moods.size > 5) {
+                        MoodCard(
+                            mood = moods[5],
+                            onClick = { navController.navigate("mood/${moods[5].name}") }
+                        )
+                    }
+                }
+
+                // Четвертая строка - 1 карточка по центру (если есть 7-е настроение)
+                if (moods.size > 6) {
                     MoodCard(
-                        mood = mood,
-                        onClick = { navController.navigate("mood/${mood.name}") }
+                        mood = moods[6],
+                        onClick = { navController.navigate("mood/${moods[6].name}") }
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // кнопка истории
+            // Кнопка истории - всегда внизу
             if (history.isNotEmpty()) {
                 GlassCard(
                     modifier = Modifier
@@ -177,6 +238,8 @@ fun MainScreen(navController: NavController, viewModel: MoodViewModel = hiltView
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
@@ -334,7 +397,7 @@ fun MoodDetailScreen(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Верхняя панель с кнопками
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -364,7 +427,7 @@ fun MoodDetailScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Основной контент
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
