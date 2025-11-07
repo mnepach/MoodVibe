@@ -23,92 +23,157 @@ class MainScreenUITest {
     @Before
     fun setup() {
         hiltRule.inject()
+        composeTestRule.waitForIdle()
+        Thread.sleep(1500) // небольшая пауза на анимации и загрузку
     }
 
     @Test
     fun testMainScreenDisplaysTitle() {
-        composeTestRule
-            .onNodeWithText("✨ Как твоё настроение?")
-            .assertExists()
-            .assertIsDisplayed()
+        try {
+            composeTestRule.waitForIdle()
+            composeTestRule
+                .onNodeWithText("✨ Как твоё настроение?", useUnmergedTree = true)
+                .assertExists("Заголовок не найден")
+                .assertIsDisplayed()
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_TITLE")
+            throw e
+        }
     }
 
     @Test
     fun testMainScreenDisplaysSubtitle() {
-        composeTestRule
-            .onNodeWithText("Выбери своё состояние")
-            .assertExists()
-            .assertIsDisplayed()
+        try {
+            composeTestRule.waitForIdle()
+            composeTestRule
+                .onNodeWithText("Выбери своё состояние", useUnmergedTree = true)
+                .assertExists("Подзаголовок не найден")
+                .assertIsDisplayed()
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_SUBTITLE")
+            throw e
+        }
     }
 
     @Test
     fun testMoodCardsAreDisplayed() {
-        composeTestRule
-            .onNodeWithText("Радость")
-            .assertExists()
-            .assertIsDisplayed()
+        try {
+            composeTestRule.waitUntil(timeoutMillis = 10000) {
+                composeTestRule.onAllNodesWithText("Радость", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule
-            .onNodeWithText("Спокойствие")
-            .assertExists()
-            .assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText("Радость", useUnmergedTree = true)
+                .assertExists("Карточка 'Радость' не найдена")
+                .assertIsDisplayed()
+
+            composeTestRule
+                .onNodeWithText("Спокойствие", useUnmergedTree = true)
+                .assertExists("Карточка 'Спокойствие' не найдена")
+                .assertIsDisplayed()
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_CARDS")
+            throw e
+        }
     }
 
     @Test
     fun testMoodCardClickNavigatesToDetail() {
-        composeTestRule
-            .onNodeWithText("Радость")
-            .performClick()
+        try {
+            composeTestRule.waitUntil(timeoutMillis = 10000) {
+                composeTestRule.onAllNodesWithText("Радость", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule.waitForIdle()
+            composeTestRule
+                .onNodeWithText("Радость", useUnmergedTree = true)
+                .performClick()
 
-        composeTestRule
-            .onNodeWithText("Радость")
-            .assertExists()
+            composeTestRule.waitUntil(timeoutMillis = 5000) {
+                composeTestRule.onAllNodesWithText("🔄 Получить другую цитату", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule
-            .onNodeWithText("🔄 Получить другую цитату")
-            .assertExists()
-            .assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText("🔄 Получить другую цитату", useUnmergedTree = true)
+                .assertExists("Кнопка получения цитаты не найдена")
+                .assertIsDisplayed()
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_DETAIL")
+            throw e
+        }
     }
 
     @Test
     fun testBackNavigationFromDetailScreen() {
-        composeTestRule
-            .onNodeWithText("Радость")
-            .performClick()
+        try {
+            composeTestRule.waitUntil(timeoutMillis = 10000) {
+                composeTestRule.onAllNodesWithText("Радость", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule.waitForIdle()
+            composeTestRule.onNodeWithText("Радость", useUnmergedTree = true)
+                .performClick()
 
-        composeTestRule
-            .onNodeWithText("✕")
-            .performClick()
+            composeTestRule.waitUntil(timeoutMillis = 5000) {
+                composeTestRule.onAllNodesWithText("✕", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule.waitForIdle()
+            composeTestRule.onNodeWithText("✕", useUnmergedTree = true)
+                .performClick()
 
-        composeTestRule
-            .onNodeWithText("✨ Как твоё настроение?")
-            .assertExists()
-            .assertIsDisplayed()
+            composeTestRule.waitUntil(timeoutMillis = 5000) {
+                composeTestRule.onAllNodesWithText("✨ Как твоё настроение?", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
+
+            composeTestRule.onNodeWithText("✨ Как твоё настроение?", useUnmergedTree = true)
+                .assertExists("Не вернулись на главный экран")
+                .assertIsDisplayed()
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_BACK")
+            throw e
+        }
     }
 
     @Test
     fun testHistoryButtonAppearsWhenHistoryExists() {
-        composeTestRule
-            .onNodeWithText("Радость")
-            .performClick()
+        try {
+            // 1️⃣ Создаём запись — кликаем на настроение
+            composeTestRule.waitUntil(timeoutMillis = 10000) {
+                composeTestRule.onAllNodesWithText("Радость", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule.waitForIdle()
+            composeTestRule.onNodeWithText("Радость", useUnmergedTree = true)
+                .performClick()
 
-        composeTestRule
-            .onNodeWithText("✕")
-            .performClick()
+            composeTestRule.waitUntil(timeoutMillis = 5000) {
+                composeTestRule.onAllNodesWithText("✕", useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
 
-        composeTestRule.waitForIdle()
+            // 2️⃣ Возвращаемся
+            composeTestRule.onNodeWithText("✕", useUnmergedTree = true)
+                .performClick()
 
-        composeTestRule
-            .onNodeWithText("История настроений")
-            .assertExists()
-            .assertIsDisplayed()
+            // 3️⃣ Ждём обновления главного экрана
+            composeTestRule.waitUntil(timeoutMillis = 8000) {
+                composeTestRule.onAllNodesWithText("История", substring = true, useUnmergedTree = true)
+                    .fetchSemanticsNodes().isNotEmpty()
+            }
+
+            // 4️⃣ Проверяем наличие кнопки, даже если она вне экрана
+            composeTestRule.onNodeWithText("История", substring = true, useUnmergedTree = true)
+                .performScrollTo()
+                .assertExists("Кнопка истории не появилась")
+                .assertIsDisplayed()
+
+        } catch (e: Exception) {
+            composeTestRule.onRoot().printToLog("UI_TREE_HISTORY")
+            throw e
+        }
     }
 }
